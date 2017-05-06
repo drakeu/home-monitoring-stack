@@ -6,16 +6,23 @@ services:
     image: graphite:1.0.0
     ports:
       - 2003:2003
+      - 2003:2003/udp
     volumes:
       - whisper:/opt/graphite/storage/whisper
-    restart: always
+    restart: unless-stopped
   grafana:
     image: grafana/grafana
     ports:
       - 3000:3000
     volumes:
       - grafana:/var/lib/grafana
-    restart: always
+    restart: unless-stopped
+    links:
+      - graphite
+  metrics:
+    build: ./metrics
+    image: metrics:1.0.0
+    restart: unless-stopped
     links:
       - graphite
 

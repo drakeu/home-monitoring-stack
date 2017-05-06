@@ -1,0 +1,2 @@
+#!/bin/sh
+/apps/speedtest-cli --csv | awk -F',' '{ print "isp.speed.test.ping "$6" '`date +%s`'\nisp.speed.test.download "$7" '`date +%s`'\nisp.speed.test.upload "$8" '`date +%s`'" }' | nc graphite 2003
